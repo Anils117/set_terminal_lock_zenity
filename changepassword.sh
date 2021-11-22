@@ -11,18 +11,47 @@ start(){
 	sudo rm -r ../set_terminal_lock_zenity #removing set_terminal lock directory.
 }
 
-sudo zenity --version
+which zenity > /dev/null #checking zenity
 if [ $? -eq 0 ]
 then
-	start
+	which figlet > /dev/null #checking figlet
+	if [ $? -eq 0 ] #checking ping
+	then
+ 		start #if zenity and figlet are Installed then start
+	else
+		ping -c 3 google.com #else install figlet and start
+		if [ $? -eq 0 ]
+		then
+			sudo apt-get update -y
+			sudo apt-get install figlet -y
+			start
+		else
+			echo "check your internet connection"
+		fi
+	fi
 else
-	ping -c 3 google.com
+	which figlet > /dev/null #if zenity is not installed but figlet is installed then install zenity and start
 	if [ $? -eq 0 ]
 	then
-		sudo apt-get update -y
-		sudo apt-get install zenity -y
-		start
+		ping -c 3 google.com
+		if [ $? -eq 0 ]
+		then
+			sudo apt-get update -y
+			sudo apt-get install zenity -y
+			start
+		else
+			echo "check your internet connection"
+		fi
 	else
-		echo "check your internet connection"
+		ping -c 3 google.com #if both are not installed then install both and start
+		if [ $? -eq 0 ]
+		then
+			sudo apt-get update -y
+			sudo apt-get install figlet -y
+			sudo apt-get install zenity -y
+			start
+		else
+			echo "check your internet connection"
+		fi
 	fi
 fi
