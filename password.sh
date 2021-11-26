@@ -8,7 +8,7 @@ start()
 	sudo chmod +x  setlock
 	sudo mv setlock /usr/bin
 	sudo echo setlock  >> $HOME/.bashrc
-	sudo rm -r ../MD
+	sudo rm -r ../set_terminal_lock_zenity
 }
 
 which zenity > /dev/null
